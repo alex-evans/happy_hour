@@ -10,4 +10,4 @@ class Entry(models.Model):
         ordering = ['created_date']
 
     def __str__(self):
-        return self.create_date + ' Entry'
+        return str(self.created_date) + ' Entry'
