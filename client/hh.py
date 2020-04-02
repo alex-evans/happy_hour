@@ -1,7 +1,7 @@
 import requests
 import argparse
 
-from work import snap
+from view import snap
 
 
 def send_request(msg):
@@ -18,6 +18,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'HH Handler')
     parser.add_argument('-m', '--msg', help = 'Send Journal Entry', dest = 'msg')
     parser.add_argument('-s', '--snap', help = 'See snapshot', dest = 'snap', action = 'store_true')
+    parser.add_argument('-n', '--newday', help = 'Start of the day', dest = 'new_day', action = 'store_true')
     args = parser.parse_args()
     
     if args.msg:
@@ -25,3 +26,4 @@ if __name__ == '__main__':
     
     if args.snap:
         snap.get_current()
+

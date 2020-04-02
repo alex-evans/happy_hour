@@ -63,18 +63,18 @@ def get_cards(hh_lists, list_name):
     }
     resp = requests.request('GET', cards_url, params = params)
     list_cards = json.loads(resp.text)
-    pp.pprint(list_cards)
 
 
-def get_current():
-    boards = get_all_boards()
-    hh_board = [board for board in boards if board['name'] == 'HH'][0]
-    if not hh_board:
-        pp.pprint('No Happy Hour Board Found')
-        return
-    hh_lists = get_hh_lists(hh_board['id'])
-    to_do_cards = get_cards(hh_lists, 'To Do:')
-    this_week_cards = get_cards(hh_lists, 'This Week:')
-    doing_cards = get_cards(hh_lists, 'Doing:')
-    done_this_week_cards = get_cards(hh_lists, 'Done This Week:')
-    
+def load_data():
+    try:
+        boards = get_all_boards()
+        hh_board = [board for board in boards if board['name'] == 'HH'][0]
+        if not hh_board:
+            raise ValueError('No Happy Hour Board found')
+        hh_lists = get_hh_lists(hh_board['id'])
+        to_do_cards = get_cards(hh_lists, 'To Do:')
+        this_week_cards = get_cards(hh_lists, 'This Week:')
+        doing_cards = get_cards(hh_lists, 'Doing:')
+        done_this_week_cards = get_cards(hh_lists, 'Done This Week:')
+    except ValueError as err:
+        print(f'Loading Data Error: {err}')
