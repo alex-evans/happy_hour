@@ -13,7 +13,7 @@ DB_PW = os.getenv('DB_PW')
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgres://{DB_USER}:{DB_PW}@localhost:5432/hhdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{DB_USER}:{DB_PW}@localhost:5432/hhdb'
 db = SQLAlchemy(app)
 
 

@@ -1,82 +1,43 @@
 
-import json
 from flask import request
+
 from database import app
-from database import User
-from database import List
-# from database import Task
 
-
-# testing Hardcode user - future pull from a config or force logging it
-USERNAME = 'admin'
-
-
-######################
-# USERS
-######################
+from handlers import lists
+from handlers import cmd_print
+from handlers import tasks
+from handlers import users
 
 
 @app.route('/user/<username>')
-def handle_user(username):
-    user = User.query.filter_by(username=username).first()
-    return f'{user}'
+def handle_user(username, methods=['GET']):
+    return users.get_user(username)
 
 
-######################
-# TASKS
-######################
-
-
-def save_task():
-    return 'TODO - SAVE TASK'
-
-
-def get_tasks():
-    return 'TODO - GET TASKS'
+@app.route('/tasks/{id}', methods=['GET'])
+def handle_task(task_id):
+    return tasks.get_task(task_id)
 
 
 @app.route('/tasks', methods=['GET', 'POST'])
 def handle_tasks():
     if request.method == 'POST':
-        return save_task()
+        return tasks.save_task(request)
     else:
-        return get_tasks()
-
-
-######################
-# LISTS
-######################
-
-
-def save_list(req_data):
-    print(req_data)
-    return 'Ok', 200
-
-
-def get_lists():
-    user = User.query.filter_by(username=USERNAME).first()
-    lists = List.query.filter_by(user=user)
-    return {
-        'test': 'lists'
-    }
+        return tasks.get_tasks()
 
 
 @app.route('/lists', methods=['GET', 'POST'])
 def handle_lists():
     if request.method == 'POST':
-        return save_list(request.data)
+        return lists.save_list(request)
     else:
-        return get_lists()
-
-
-######################
-# PRINTING
-######################
+        return lists.get_lists()
 
 
 @app.route('/start_day')
 def handle_start_day():
-    return ''
+    return cmd_print.start_data
 
 
 @app.route('/')
