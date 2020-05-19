@@ -1,20 +1,7 @@
 
-import os
 from datetime import datetime
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from dotenv import load_dotenv
 
-
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-load_dotenv(dotenv_path)
-DB_USER = os.getenv('DB_USER')
-DB_PW = os.getenv('DB_PW')
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{DB_USER}:{DB_PW}@localhost:5432/hhdb'
-db = SQLAlchemy(app)
+from . import db
 
 
 class User(db.Model):

@@ -1,5 +1,5 @@
 
-from database import User
+from src.models import User
 
 
 def get_user(username):

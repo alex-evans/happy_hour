@@ -1,10 +1,9 @@
 
 import json
 
-from database import db
-from database import List
-from database import Task
-from database import User
+from src.models import List
+from src.models import Task
+from src.models import User
 
 
 # testing Hardcode user - future pull from a config or force logging it
@@ -21,7 +20,7 @@ def missing_required_data(task_data):
     return None
 
 
-def save_task(request):
+def save_task(db, request):
     if not request.json:
         return 'No Data to Save', 400
 

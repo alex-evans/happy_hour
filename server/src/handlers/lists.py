@@ -1,16 +1,15 @@
 
 import json
 
-from database import db
-from database import List
-from database import User
+from src.models import List
+from src.models import User
 
 
 # testing Hardcode user - future pull from a config or force logging it
 USERNAME = 'admin'
 
 
-def save_list(request):
+def save_list(db, request):
     if not request.json:
         return 'No Data to Save', 400
 

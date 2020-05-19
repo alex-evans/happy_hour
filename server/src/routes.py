@@ -1,12 +1,13 @@
 
 from flask import request
+from flask import current_app as app
 
-from database import app
+from .models import db
 
-from handlers import lists
-from handlers import cmd_print
-from handlers import tasks
-from handlers import users
+from .handlers import lists
+from .handlers import cmd_print
+from .handlers import tasks
+from .handlers import users
 
 
 @app.route('/user/<username>')
@@ -22,15 +23,16 @@ def handle_task(task_id):
 @app.route('/tasks', methods=['GET', 'POST'])
 def handle_tasks():
     if request.method == 'POST':
-        return tasks.save_task(request)
+        return tasks.save_task(db, request)
     else:
         return tasks.get_tasks()
 
 
 @app.route('/lists', methods=['GET', 'POST'])
 def handle_lists():
+    from src import db
     if request.method == 'POST':
-        return lists.save_list(request)
+        return lists.save_list(db, request)
     else:
         return lists.get_lists()
 
@@ -43,11 +45,3 @@ def handle_start_day():
 @app.route('/')
 def base():
     return 'Hello - no action taken'
-
-
-######################
-######################
-
-
-if __name__ == '__main__':
-    app.run()
